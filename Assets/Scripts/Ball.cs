@@ -35,17 +35,20 @@ public class Ball : MonoBehaviour
             localPoint = ballTransform.InverseTransformPoint(contact.point);
             Debug.Log($"{ballTransform.name} {localPoint}");
 
+            _collisionX = Mathf.Round(localPoint.x * 10) / 10; //Rounding collision points to nearest tenth
+            _collisionY = Mathf.Round(localPoint.y * 10) / 10;
             // Visualize the contact point
             Debug.DrawRay(contact.point, contact.normal, Color.green);
         }
-        _collisionX = collision.contacts[0].point.x;
-        _collisionY = collision.contacts[0].point.y;
 
-        if (_collisionX > 0) 
+        Debug.Log(_collisionX);
+        Debug.Log(_collisionY);
+
+        if (_collisionX > 0 || _collisionX < 0) 
         {
             _directionX *= -1; //Flip X velocity
         }
-        if (_collisionY < 0) 
+        if (_collisionY > 0 || _collisionY < 0) 
         {
             _directionY *= -1; //Flip Y velocity
         }
@@ -62,9 +65,9 @@ public class Ball : MonoBehaviour
 
     private void Update()
     {
-        //_rigidbody2D.velocity = new Vector2(_directionX, _directionY);
-        _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); //Set the position of the mouse in the game
-        _rigidbody2D.position = _mousePosition; //Set the player's position to the mouse
+       _rigidbody2D.velocity = new Vector2(_directionX, _directionY);
+       // _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); //Set the position of the mouse in the game
+       // _rigidbody2D.position = _mousePosition; //Set the player's position to the mouse
     }
 
 }
