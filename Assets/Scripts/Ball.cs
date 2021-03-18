@@ -10,8 +10,8 @@ public class Ball : MonoBehaviour
     Rigidbody2D _rigidbody2D;
     float _directionX;
     float _directionY;
-    private float _collisionX;
-    private float _collisionY;
+    private float _crossX;
+    private float _crossY;
     private Vector2 _mousePosition;
     private Vector2 localPoint;
     private Transform _ballTransform;
@@ -50,14 +50,15 @@ public class Ball : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Vector2 hit = collision.GetContact(0).normal;
-        print($"Hit: {hit}, Hit.x: {hit.x}, Hit.y: {hit.y}");
 
         float angle = Vector2.Angle(hit, Vector2.up);
-        print(angle);
         Vector3 cross = Vector3.Cross(Vector3.forward, hit);
         Debug.DrawRay(collision.contacts[0].point, collision.contacts[0].normal, Color.green);// Visualize the contact point
+        //ConsoleDebug(hit, angle, cross);
+        _crossX = Mathf.Round(cross.x * 10) / 10; //Rounding collision points to nearest tenth
+        _crossY = Mathf.Round(cross.y * 10) / 10;
 
-        print($"Cross: {cross}, Cross.x: {cross.x}, Cross.y: {cross.y}");
+        //print($"{_crossX} X, {_crossY} Y");
         if (Mathf.Approximately(angle, 0))
         {
             if (cross.x < 0) //Bottom hit
@@ -67,7 +68,7 @@ public class Ball : MonoBehaviour
                 print("Hit Bottom");
             }
         }
-        if (Mathf.Approximately(angle, 90))
+        else if (Mathf.Approximately(angle, 90))
         {
             if (cross.y < 0)
             {
@@ -83,7 +84,7 @@ public class Ball : MonoBehaviour
             }
 
         }
-        if (Mathf.Approximately(angle, 180))
+        else if (Mathf.Approximately(angle, 180))
         {
             if (cross.x > 0) //Top hit
             {
@@ -92,8 +93,23 @@ public class Ball : MonoBehaviour
                 print("Hit Top");
             }
         }
+        else if (Mathf.Abs(cross.x) == Mathf.Abs(cross.x))
+        {
+            _directionX *= -1; //Flip X velocity
+            _directionY *= -1; //Flip X velocity
+            ChangeVelocity();
+            print("Hit Corner");
+        }
     }
 
+    private static void ConsoleDebug(Vector2 hit, float angle, Vector3 cross)
+    {
+        print($"Hit: {hit}, Hit.x: {hit.x}, Hit.y: {hit.y}");
+        print(angle);
+        print($"Cross: {cross}, Cross.x: {cross.x}, Cross.y: {cross.y}");
+        print($"Abs X: {Mathf.Abs(cross.x)} Abs Y: {Mathf.Abs(cross.x)}");
+        print($"== check {Mathf.Abs(cross.x) == Mathf.Abs(cross.x)}");
+    }
 
     private void ChangeVelocity()
     {
