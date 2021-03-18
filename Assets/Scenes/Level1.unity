@@ -2571,7 +2571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6873414391550339805, guid: cd2fa7e47e3088647b90609d60f4bd12, type: 3}
       propertyPath: _ballSpeed
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6873414391550339806, guid: cd2fa7e47e3088647b90609d60f4bd12, type: 3}
       propertyPath: m_Radius
