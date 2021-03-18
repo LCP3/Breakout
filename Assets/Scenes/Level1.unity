@@ -136,11 +136,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2138649505522315153, guid: 0b8bd7cacc7694e479fe93ebd6889d37, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.5
+      value: -0.62
       objectReference: {fileID: 0}
     - target: {fileID: 2138649505522315153, guid: 0b8bd7cacc7694e479fe93ebd6889d37, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 2138649505522315153, guid: 0b8bd7cacc7694e479fe93ebd6889d37, type: 3}
       propertyPath: m_LocalPosition.z
@@ -389,6 +389,10 @@ PrefabInstance:
     - target: {fileID: 3801361836433008978, guid: a64ca972640eb404ab4d1294b6af78c5, type: 3}
       propertyPath: m_Name
       value: Wall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3801361836433008978, guid: a64ca972640eb404ab4d1294b6af78c5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a64ca972640eb404ab4d1294b6af78c5, type: 3}
@@ -676,6 +680,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall
       objectReference: {fileID: 0}
+    - target: {fileID: 3801361836433008978, guid: a64ca972640eb404ab4d1294b6af78c5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a64ca972640eb404ab4d1294b6af78c5, type: 3}
 --- !u!1001 &1788160272
@@ -907,6 +915,10 @@ PrefabInstance:
     - target: {fileID: 3801361836433008978, guid: a64ca972640eb404ab4d1294b6af78c5, type: 3}
       propertyPath: m_Name
       value: Wall (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3801361836433008978, guid: a64ca972640eb404ab4d1294b6af78c5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a64ca972640eb404ab4d1294b6af78c5, type: 3}
@@ -1178,16 +1190,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6873414391550339804, guid: cd2fa7e47e3088647b90609d60f4bd12, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6873414391550339804, guid: cd2fa7e47e3088647b90609d60f4bd12, type: 3}
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6873414391550339804, guid: cd2fa7e47e3088647b90609d60f4bd12, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6873414391550339805, guid: cd2fa7e47e3088647b90609d60f4bd12, type: 3}
       propertyPath: _ballSpeed
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6873414391550339806, guid: cd2fa7e47e3088647b90609d60f4bd12, type: 3}
       propertyPath: m_Radius
-      value: 0.12
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 6873414391550339806, guid: cd2fa7e47e3088647b90609d60f4bd12, type: 3}
       propertyPath: m_Enabled
