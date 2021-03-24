@@ -1,18 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
 
-public class NewBehaviourScript : MonoBehaviour
+public class UILives : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    TMP_Text _text;
+
+    private void Start()
     {
-        
+        _text = GetComponent<TMP_Text>();
+
+        GameSystems.Lives = 3;
+        UpdateLivesText(GameSystems.Lives);
+        GameSystems.OnPlayerDeath += UpdateLivesText;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void UpdateLivesText(int lives)
     {
-        
+        Debug.Log($"Lives updated to : {lives}");
+        _text.SetText($"Lives: {lives}");
     }
 }
