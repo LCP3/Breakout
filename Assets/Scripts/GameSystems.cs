@@ -9,10 +9,7 @@ public class GameSystems : MonoBehaviour
 
     public static void ChangeLives(int lives)
     {
-        Debug.Log($"In Change Lives, Lives = {Lives}");
         Lives += lives;
-        Debug.Log($"Now lives = {Lives}");
-        OnPlayerDeath?.Invoke(Lives);
+        OnPlayerDeath?.Invoke(Lives); //UILives subscriber UpdateLivesText
     }
-
 }
