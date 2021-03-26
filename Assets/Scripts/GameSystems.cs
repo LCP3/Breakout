@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameSystems : MonoBehaviour
 {
@@ -11,5 +13,8 @@ public class GameSystems : MonoBehaviour
     {
         Lives += lives;
         OnPlayerDeath?.Invoke(Lives); //UILives subscriber UpdateLivesText
+
+        if (Lives == 0)
+            SceneManager.LoadScene("Level1");
     }
 }
