@@ -12,6 +12,6 @@ public class KillOnEnter : MonoBehaviour
             return;
 
         GameSystems.ChangeLives(-1);
-        ball.SetUpBall();
+        ball.BallSetup();
     }
 }

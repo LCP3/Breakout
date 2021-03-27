@@ -17,7 +17,7 @@ public class Ball : MonoBehaviour
 
     void Start()
     {
-        
+
         _transform = GetComponent<Transform>();
         _rigidbody2D = GetComponent<Rigidbody2D>(); //Cache
         _directionX = _ballSpeed;
@@ -26,6 +26,8 @@ public class Ball : MonoBehaviour
         _startingVelocity = new Vector2(_directionX, _directionY); //Set up starting velocity
         _velocity = new Vector2(_directionX, _directionY); //Set up velocity for initial use
         _rigidbody2D.velocity = _startingVelocity; //Set ball's starting velocity
+
+        BallSetup();
     }
 
     private void Update()
@@ -56,7 +58,7 @@ public class Ball : MonoBehaviour
         _rigidbody2D.velocity = _velocity; //Set new reflected velocity
     }
 
-    public void SetUpBall()
+    public void BallSetup()
     {
         //Set up the ball with the player paddle
         _ballSetup = true;
