@@ -1,11 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Brick : MonoBehaviour
 {
+    private Collider2D _collider2D;
+    private SpriteRenderer _spriteRenderer;
+
+    private void Start()
+    {
+        _collider2D = GetComponent<Collider2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        gameObject.SetActive(false);  //Disable the brick
+        _collider2D.enabled = false;
+        _spriteRenderer.enabled = false;
+        GameSystems.AddScore(100);        
     }
 }
