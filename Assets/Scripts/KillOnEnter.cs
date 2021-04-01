@@ -6,12 +6,12 @@ public class KillOnEnter : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision) //If the ball enters the "kill zone"
     {
-        var ball = collision.GetComponent<Ball>();
+        var Ball = collision.GetComponent<Ball>();
 
-        if (ball == null)
+        if (Ball == null)
             return;
 
         GameSystems.ChangeLives(-1);
-        ball.BallSetup();
+        Ball.BallSetup();
     }
 }
