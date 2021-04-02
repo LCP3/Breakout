@@ -17,7 +17,6 @@ public class Ball : MonoBehaviour
 
     void Start()
     {
-
         _transform = GetComponent<Transform>();
         _rigidbody2D = GetComponent<Rigidbody2D>(); //Cache
         _directionX = _ballSpeed;

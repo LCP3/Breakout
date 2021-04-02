@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
+
+        GameSystems.Lives = 3; //Set up lives -- Want to refactor this line and add adjustable # to inspector
     }
 
     // Update is called once per frame

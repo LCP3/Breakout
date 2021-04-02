@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class KillOnEnter : MonoBehaviour
 {
@@ -11,7 +10,16 @@ public class KillOnEnter : MonoBehaviour
         if (Ball == null)
             return;
 
-        GameSystems.ChangeLives(-1);
-        Ball.BallSetup();
+        print($"Ballcount: {GameSystems.BallCount}");
+
+        if (GameSystems.BallCount > 1)
+        {
+            Destroy(Ball.gameObject);
+            GameSystems.ChangeBallCount(-1);
+        }
+        else { 
+            GameSystems.ChangeLives(-1);
+            Ball.BallSetup();
+        }
     }
 }

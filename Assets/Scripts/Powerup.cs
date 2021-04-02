@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Powerup : MonoBehaviour
@@ -16,11 +17,17 @@ public class Powerup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        PowerupMultiball(collision);
+    }
+
+    private void PowerupMultiball(Collider2D collision)
+    {
         var Player = collision.GetComponent<Player>();
 
         if (Player == null)
             return;
 
         Instantiate(_ball, new Vector2(1f, 1f), Quaternion.identity);
+        GameSystems.ChangeBallCount(1);
     }
 }

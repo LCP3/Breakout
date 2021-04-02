@@ -10,12 +10,9 @@ public class GameSystems : MonoBehaviour
 
     public static int Lives { get; set; }
     public static int Score { get; private set; }
+    public static int BallCount { get; private set; }
 
-    private void Start()
-    {
-        Score = 0; //Score setup
-    }
-
+    
     public static void ChangeLives(int lives)
     {
         Lives += lives;
@@ -29,5 +26,13 @@ public class GameSystems : MonoBehaviour
     {
         Score += points;
         OnScoreChange?.Invoke(Score);
+    }
+
+    public static void ChangeBallCount(int numOfBalls)
+    {
+        if (BallCount == 0)
+            BallCount = 1;
+
+        BallCount += numOfBalls;
     }
 }

@@ -5760,9 +5760,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4235633733128794114, guid: b153435ac5854664ea1a9ef54c74e662, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b2ddf4098d987094498196b1ae967e15, type: 3}
+    - target: {fileID: 4235633733128794114, guid: b153435ac5854664ea1a9ef54c74e662, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4235633733128794115, guid: b153435ac5854664ea1a9ef54c74e662, type: 3}
       propertyPath: m_Name
       value: Powerup
+      objectReference: {fileID: 0}
+    - target: {fileID: 4235633733128794115, guid: b153435ac5854664ea1a9ef54c74e662, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8491218969775554414, guid: b153435ac5854664ea1a9ef54c74e662, type: 3}
       propertyPath: _ball

@@ -9,7 +9,6 @@ public class UILives : MonoBehaviour
     {
         _text = GetComponent<TMP_Text>();
 
-        GameSystems.Lives = 3; //Set up lives -- Want to refactor this line and add adjustable # to inspector
         UpdateLivesText(GameSystems.Lives); //Update UI
         GameSystems.OnPlayerDeath += UpdateLivesText; //Subscribing to and called by GameSystems on death
         
