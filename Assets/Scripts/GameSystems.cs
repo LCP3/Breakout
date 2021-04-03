@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class GameSystems : MonoBehaviour
+public class GameSystems
 {
     public static event Action<int> OnPlayerDeath;
     public static event Action<int> OnScoreChange;

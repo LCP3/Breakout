@@ -19,7 +19,6 @@ public class UIScore : MonoBehaviour
 
     public void UpdateScoreText(int score)
     {
-        Debug.Log($"Score updated: {score}");
         _text.SetText($"Score: {score}");
     }
 }

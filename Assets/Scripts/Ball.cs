@@ -26,6 +26,9 @@ public class Ball : MonoBehaviour
         _velocity = new Vector2(_directionX, _directionY); //Set up velocity for initial use
         _rigidbody2D.velocity = _startingVelocity; //Set ball's starting velocity
 
+        if (GameSystems.BallCount >= 1)
+            return;
+
         BallSetup();
     }
 

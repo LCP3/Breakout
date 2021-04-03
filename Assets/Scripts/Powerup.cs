@@ -6,7 +6,7 @@ public class Powerup : MonoBehaviour
     [SerializeField] float _powerupFallSpeed = -2f; //Adjustable in inspector for designer
 
     private Rigidbody2D _rigidbody2D;
-    public Rigidbody2D _ball;
+    public GameObject _ball;
 
     private void Awake()
     {
@@ -22,12 +22,12 @@ public class Powerup : MonoBehaviour
 
     private void PowerupMultiball(Collider2D collision)
     {
-        var Player = collision.GetComponent<Player>();
+        var Player = collision.GetComponent<Player>(); //Make sure the collision is the player
 
         if (Player == null)
             return;
 
-        Instantiate(_ball, new Vector2(1f, 1f), Quaternion.identity);
-        GameSystems.ChangeBallCount(1);
+        Instantiate(_ball, transform.position, Quaternion.identity); //Spawn a new ball
+        GameSystems.ChangeBallCount(1); //Add to the ball count in GameSystems
     }
 }

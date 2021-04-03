@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _powerupFallSpeed: -2
+  _ball: {fileID: 6873414391550339809, guid: cd2fa7e47e3088647b90609d60f4bd12, type: 3}
 --- !u!50 &2385948689293397108
 Rigidbody2D:
   serializedVersion: 4
