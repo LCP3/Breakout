@@ -14,7 +14,7 @@ TagManager:
   - BG
   - Walls
   - Blocks
-  - 
+  - Particles
   - 
   - 
   - 
@@ -58,4 +58,7 @@ TagManager:
     locked: 0
   - name: Blocks
     uniqueID: 492384759
+    locked: 0
+  - name: Particles
+    uniqueID: 391883931
     locked: 0

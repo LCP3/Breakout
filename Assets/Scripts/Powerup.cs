@@ -3,21 +3,28 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
-    [SerializeField] float _powerupFallSpeed = -2f; //Adjustable in inspector for designer
+    [SerializeField] float _powerupFallSpeed = 2f; //Adjustable in inspector for designer
 
     private Rigidbody2D _rigidbody2D;
+    private SpriteRenderer _spriteRenderer;
+    private Collider2D _collider2D;
+
     public GameObject _ball;
 
     private void Awake()
     {
         //Cache
         _rigidbody2D = GetComponent<Rigidbody2D>(); 
-        _rigidbody2D.velocity = new Vector2(0, _powerupFallSpeed);
+        _rigidbody2D.velocity = new Vector2(0, -_powerupFallSpeed);
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _collider2D = GetComponent<Collider2D>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        PowerupMultiball(collision);
+        PowerupMultiball(collision); //Activate the powerup
+
+        Destroy(this.gameObject);
     }
 
     private void PowerupMultiball(Collider2D collision)
