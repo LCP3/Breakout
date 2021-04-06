@@ -19,7 +19,9 @@ public class Player : MonoBehaviour
     void Update()
     {
         _mousePosition = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, transform.position.y); //Set the position of the mouse in the game
-        _rigidbody2D.position = _mousePosition; //Set the player's position to the mouse
+        if (_mousePosition.x > -8.7f && _mousePosition.x < 2.6f) //If within the bounds of the stage
+        {
+            _rigidbody2D.position = _mousePosition; //Set the player's position to the mouse
+        }
     }
-
 }
