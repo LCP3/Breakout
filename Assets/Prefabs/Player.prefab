@@ -78,8 +78,8 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1.04, y: 0.24}
+  m_DrawMode: 1
+  m_Size: {x: 1.5, y: 0.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -111,7 +111,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.04, y: 0.24}
+  m_Size: {x: 1.5, y: 0.24}
   m_Direction: 1
 --- !u!50 &1372406469114422623
 Rigidbody2D:

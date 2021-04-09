@@ -14,11 +14,13 @@ public class Ball : MonoBehaviour
 
     public GameObject Player;
     bool _ballSetup;
+    ParticleSystem _particleSystem;
 
     void Start()
     {
         _transform = GetComponent<Transform>();
         _rigidbody2D = GetComponent<Rigidbody2D>(); //Cache
+        _particleSystem = GetComponentInChildren<ParticleSystem>();
         _directionX = _ballSpeed;
         _directionY = _ballSpeed;
 
@@ -38,6 +40,8 @@ public class Ball : MonoBehaviour
         {
             ShootBall();
         }
+
+        print($"Magnitude: {_velocity.magnitude}");
     }
 
     private void ShootBall()
@@ -47,17 +51,59 @@ public class Ball : MonoBehaviour
         _rigidbody2D.transform.SetParent(null);
         _rigidbody2D.isKinematic = false;
         _rigidbody2D.velocity = _startingVelocity;
+
+        //Enable the particle system on the ball
+        _particleSystem.gameObject.SetActive(true);
     }
 
     private void OnCollisionEnter2D(Collision2D collision) //On collision
     {
-        BounceBall(_rigidbody2D, collision.contacts[0].normal);
+        float x = PaddleAngle(transform.position, collision.transform.position, collision.collider.bounds.size.x);
+        print($"X: {x}");
+
+        if (collision.transform.name == "Player")
+        {
+            BounceBall(_rigidbody2D, collision.contacts[0].normal, x);
+        }
+        else
+        {
+            BounceBall(_rigidbody2D, collision.contacts[0].normal, 1);
+        }
     }
 
-    private void BounceBall(Rigidbody2D rigidbody2D, Vector2 normal)
+    private float PaddleAngle(Vector2 position1, Vector2 position2, float x)
     {
+        return (position1.x - position2.x) / x;
+    }
+
+    private void BounceBall(Rigidbody2D rigidbody2D, Vector2 normal, float paddleAngle)
+    {
+        print($"Velocity 1: {_velocity}");
         _velocity = Vector2.Reflect(_velocity, normal); //Reflect the current velocity, reflection at contact[0].normal
+        print($"Velocity 2: {_velocity}");
         _rigidbody2D.velocity = _velocity; //Set new reflected velocity
+        
+
+        if (paddleAngle < -.25)
+        {
+            //-2
+            print("-2");
+        }
+        else if (paddleAngle >= -.25 && paddleAngle <= 0)
+        {
+            //-1
+            print("-1");
+        }
+        else if (paddleAngle >= 0 && paddleAngle <= .25)
+        {
+            //1
+            print("1");
+        }
+        else if (paddleAngle > -.25)
+        {
+            //2
+            print("2");
+        }
     }
 
     public void BallSetup()
@@ -68,6 +114,9 @@ public class Ball : MonoBehaviour
         _rigidbody2D.isKinematic = true;
         _rigidbody2D.transform.localPosition = new Vector2(0, 0.3f);
         _rigidbody2D.velocity = new Vector2(0, 0);
+
+        //Disable the particle system while the ball is inactive
+        _particleSystem.gameObject.SetActive(false);
 
         //Reset stored bounce velocity to initial velocity
         _velocity = _startingVelocity; 

@@ -22,13 +22,11 @@ public class Powerup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        var _player = collision.GetComponent<Player>();
-
         PowerupMultiball(collision); //Activate the powerup
 
-        if (collision == _player)
+        if (collision.transform.name == "Player") //If the powerup hits the player
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject); //Delete the powerup
         }
     }
 
