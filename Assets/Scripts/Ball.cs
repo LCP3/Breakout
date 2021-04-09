@@ -15,6 +15,8 @@ public class Ball : MonoBehaviour
     public GameObject Player;
     bool _ballSetup;
     ParticleSystem _particleSystem;
+    private Vector2 _bounceAngle;
+    private Vector2 lastFrameVelocity;
 
     void Start()
     {
@@ -41,7 +43,9 @@ public class Ball : MonoBehaviour
             ShootBall();
         }
 
-        print($"Magnitude: {_velocity.magnitude}");
+        //Store velocity from last frame for calculation purposes
+        lastFrameVelocity = _rigidbody2D.velocity;
+
     }
 
     private void ShootBall()
@@ -59,7 +63,6 @@ public class Ball : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision) //On collision
     {
         float x = PaddleAngle(transform.position, collision.transform.position, collision.collider.bounds.size.x);
-        print($"X: {x}");
 
         if (collision.transform.name == "Player")
         {
@@ -78,31 +81,27 @@ public class Ball : MonoBehaviour
 
     private void BounceBall(Rigidbody2D rigidbody2D, Vector2 normal, float paddleAngle)
     {
-        print($"Velocity 1: {_velocity}");
-        _velocity = Vector2.Reflect(_velocity, normal); //Reflect the current velocity, reflection at contact[0].normal
-        print($"Velocity 2: {_velocity}");
-        _rigidbody2D.velocity = _velocity; //Set new reflected velocity
-        
+        var speed = lastFrameVelocity.magnitude;
+        var direction = Vector2.Reflect(lastFrameVelocity.normalized, normal); //Reflect at collision's normal with the direction of the last frame's velocity
+
+        Debug.Log("Out Direction: " + direction);
+        rigidbody2D.velocity = direction * Mathf.Max(speed, _ballSpeed);
 
         if (paddleAngle < -.25)
         {
             //-2
-            print("-2");
         }
         else if (paddleAngle >= -.25 && paddleAngle <= 0)
         {
             //-1
-            print("-1");
         }
         else if (paddleAngle >= 0 && paddleAngle <= .25)
         {
             //1
-            print("1");
         }
         else if (paddleAngle > -.25)
         {
             //2
-            print("2");
         }
     }
 
@@ -119,6 +118,6 @@ public class Ball : MonoBehaviour
         _particleSystem.gameObject.SetActive(false);
 
         //Reset stored bounce velocity to initial velocity
-        _velocity = _startingVelocity; 
+        _velocity = _startingVelocity;
     }
 }
