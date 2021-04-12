@@ -15,13 +15,12 @@ public class Ball : MonoBehaviour
     public GameObject Player;
     bool _ballSetup;
     ParticleSystem _particleSystem;
-    private Vector2 _bounceAngle;
     private Vector2 lastFrameVelocity;
 
     void Start()
     {
-        _transform = GetComponent<Transform>();
-        _rigidbody2D = GetComponent<Rigidbody2D>(); //Cache
+        _transform = GetComponent<Transform>(); //Cache
+        _rigidbody2D = GetComponent<Rigidbody2D>(); 
         _particleSystem = GetComponentInChildren<ParticleSystem>();
         _directionX = _ballSpeed;
         _directionY = _ballSpeed;
@@ -45,7 +44,12 @@ public class Ball : MonoBehaviour
 
         //Store velocity from last frame for calculation purposes
         lastFrameVelocity = _rigidbody2D.velocity;
+    }
 
+    private void FixedUpdate()
+    {
+        //Make sure the speed is always constant
+        _rigidbody2D.velocity = _ballSpeed * (_rigidbody2D.velocity.normalized);
     }
 
     private void ShootBall()
@@ -70,38 +74,44 @@ public class Ball : MonoBehaviour
         }
         else
         {
-            BounceBall(_rigidbody2D, collision.contacts[0].normal, 1);
+            BounceBall(_rigidbody2D, collision.contacts[0].normal, 0);
         }
     }
 
-    private float PaddleAngle(Vector2 position1, Vector2 position2, float x)
+    private float PaddleAngle(Vector2 ballPos, Vector2 paddlePos, float x)
     {
-        return (position1.x - position2.x) / x;
+        return (ballPos.x - paddlePos.x) / x;
     }
 
     private void BounceBall(Rigidbody2D rigidbody2D, Vector2 normal, float paddleAngle)
     {
         var speed = lastFrameVelocity.magnitude;
-        var direction = Vector2.Reflect(lastFrameVelocity.normalized, normal); //Reflect at collision's normal with the direction of the last frame's velocity
-
-        Debug.Log("Out Direction: " + direction);
-        rigidbody2D.velocity = direction * Mathf.Max(speed, _ballSpeed);
+        
+        if (paddleAngle == 0) //If we're not hitting the paddle at all
+        {
+            Vector2 direction = Vector2.Reflect(lastFrameVelocity.normalized, normal); //Reflect at collision's normal with the direction of the last frame's velocity, normalized to decouple velocity from speed.var direction = Vector2.Reflect(lastFrameVelocity.normalized, normal); //Reflect at collision's normal with the direction of the last frame's velocity, normalized to decouple velocity from speed.
+            rigidbody2D.velocity = direction * Mathf.Max(speed, _ballSpeed);
+            Debug.Log("Out Direction: " + direction);
+            return;
+        }
 
         if (paddleAngle < -.25)
         {
-            //-2
+            //Left side of the paddle hit
+            Vector2 direction = new Vector2(paddleAngle, 1).normalized;
+            _rigidbody2D.velocity = direction * speed;
         }
-        else if (paddleAngle >= -.25 && paddleAngle <= 0)
+        else if (paddleAngle >= -.25 && paddleAngle <= .25)
         {
-            //-1
-        }
-        else if (paddleAngle >= 0 && paddleAngle <= .25)
-        {
-            //1
+            //Middle hit
+            Vector2 direction = new Vector2(paddleAngle, 1).normalized;
+            _rigidbody2D.velocity = direction * speed;
         }
         else if (paddleAngle > -.25)
         {
-            //2
+            //Right hit
+            Vector2 direction = new Vector2(paddleAngle, 1).normalized;
+            _rigidbody2D.velocity = direction * speed;
         }
     }
 
@@ -112,12 +122,12 @@ public class Ball : MonoBehaviour
         _rigidbody2D.transform.SetParent(Player.transform);
         _rigidbody2D.isKinematic = true;
         _rigidbody2D.transform.localPosition = new Vector2(0, 0.3f);
-        _rigidbody2D.velocity = new Vector2(0, 0);
+        _rigidbody2D.velocity = _startingVelocity;
 
         //Disable the particle system while the ball is inactive
         _particleSystem.gameObject.SetActive(false);
 
         //Reset stored bounce velocity to initial velocity
-        _velocity = _startingVelocity;
+        //_velocity = _startingVelocity;
     }
 }

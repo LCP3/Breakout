@@ -38,6 +38,6 @@ public class Powerup : MonoBehaviour
             return;
 
         Instantiate(_ball, transform.position, Quaternion.identity); //Spawn a new ball
-        GameSystems.ChangeBallCount(1); //Add to the ball count in GameSystems
+        GameSystems.ChangeBallCount(1); //Add to the ball count in GameSystems, only last ball lost subtracts a life
     }
 }
