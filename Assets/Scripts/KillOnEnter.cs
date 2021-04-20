@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class KillOnEnter : MonoBehaviour
 {
+    public GameObject _ball;
+
     private void OnTriggerEnter2D(Collider2D collision) //If the ball enters the "kill zone"
     {
-        var Ball = collision.GetComponent<Ball>(); //Make sure the collision is a ball
+        var Ball = collision.GetComponent<Ball>(); 
 
-        if (Ball == null)
+        if (Ball == null) //Make sure the collision is a ball
             return;
 
         print($"Ballcount: {GameSystems.BallCount}");
@@ -19,7 +21,7 @@ public class KillOnEnter : MonoBehaviour
         }
         else { 
             GameSystems.ChangeLives(-1); //Update Ball Count to 0, triggering a life loss
-            Ball.BallSetup(); //Re-set up the ball
+            Ball.BallSetup();
         }
     }
 }

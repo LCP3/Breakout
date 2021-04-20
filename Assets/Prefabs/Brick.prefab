@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -4873200819962972176}
   m_Layer: 8
   m_Name: Brick
-  m_TagString: Untagged
+  m_TagString: Brick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b12923502c23747a56042299df7aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _powerupChance: 1
+  _powerupChance: 10
   _powerup: {fileID: 2385948689293397108, guid: b153435ac5854664ea1a9ef54c74e662, type: 3}
 --- !u!198 &-5848524314954180561
 ParticleSystem:

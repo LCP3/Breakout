@@ -8,6 +8,7 @@ public class Powerup : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     private SpriteRenderer _spriteRenderer;
     private Collider2D _collider2D;
+    private Ball Ball;
 
     public GameObject _ball;
 
@@ -26,7 +27,7 @@ public class Powerup : MonoBehaviour
 
         if (collision.transform.name == "Player") //If the powerup hits the player
         {
-            Destroy(gameObject); //Delete the powerup
+            Destroy(gameObject); //Delete the powerup gameObject
         }
     }
 
@@ -37,7 +38,9 @@ public class Powerup : MonoBehaviour
         if (Player == null)
             return;
 
-        Instantiate(_ball, transform.position, Quaternion.identity); //Spawn a new ball
+        Instantiate(_ball, transform.position, Quaternion.identity, Player.transform); //Spawn a new ball
+
         GameSystems.ChangeBallCount(1); //Add to the ball count in GameSystems, only last ball lost subtracts a life
+
     }
 }

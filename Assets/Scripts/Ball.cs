@@ -9,19 +9,23 @@ public class Ball : MonoBehaviour
     Rigidbody2D _rigidbody2D;
     float _directionX;
     float _directionY;
-    private Vector2 _velocity;
-    private Vector2 _startingVelocity;
+    Vector2 _velocity;
+    Vector2 _startingVelocity;
+    bool _ballSetup;
+    TrailRenderer _trailRenderer;
+    Vector2 lastFrameVelocity;
+    AudioSource _audio;
 
     public GameObject Player;
-    bool _ballSetup;
-    ParticleSystem _particleSystem;
-    private Vector2 lastFrameVelocity;
+    public AudioClip[] _audioSources;
 
     void Start()
     {
-        _transform = GetComponent<Transform>(); //Cache
-        _rigidbody2D = GetComponent<Rigidbody2D>(); 
-        _particleSystem = GetComponentInChildren<ParticleSystem>();
+        //Cache
+        _transform = GetComponent<Transform>(); 
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _trailRenderer = GetComponentInChildren<TrailRenderer>();
+        _audio = GetComponent<AudioSource>();
         _directionX = _ballSpeed;
         _directionY = _ballSpeed;
 
@@ -60,8 +64,8 @@ public class Ball : MonoBehaviour
         _rigidbody2D.isKinematic = false;
         _rigidbody2D.velocity = _startingVelocity;
 
-        //Enable the particle system on the ball
-        _particleSystem.gameObject.SetActive(true);
+        //Enable the particle trail on the ball
+        _trailRenderer.gameObject.SetActive(true);
     }
 
     private void OnCollisionEnter2D(Collision2D collision) //On collision
@@ -70,32 +74,30 @@ public class Ball : MonoBehaviour
 
         if (collision.transform.name == "Player")
         {
-            BounceBall(_rigidbody2D, collision.contacts[0].normal, x);
+            BounceBall(_rigidbody2D, collision.contacts[0].normal, x, collision); //Pass in the angle
         }
         else
         {
-            BounceBall(_rigidbody2D, collision.contacts[0].normal, 0);
+            BounceBall(_rigidbody2D, collision.contacts[0].normal, 0, collision);
         }
     }
 
     private float PaddleAngle(Vector2 ballPos, Vector2 paddlePos, float x)
     {
-        return (ballPos.x - paddlePos.x) / x;
+        return (ballPos.x - paddlePos.x) / x; //Get the relative angle of the ball to the paddle to set a new trajectory
     }
 
-    private void BounceBall(Rigidbody2D rigidbody2D, Vector2 normal, float paddleAngle)
+    private void BounceBall(Rigidbody2D rigidbody2D, Vector2 normal, float paddleAngle, Collision2D collision)
     {
         var speed = lastFrameVelocity.magnitude;
         
         if (paddleAngle == 0) //If we're not hitting the paddle at all
         {
             Vector2 direction = Vector2.Reflect(lastFrameVelocity.normalized, normal); //Reflect at collision's normal with the direction of the last frame's velocity, normalized to decouple velocity from speed.var direction = Vector2.Reflect(lastFrameVelocity.normalized, normal); //Reflect at collision's normal with the direction of the last frame's velocity, normalized to decouple velocity from speed.
-            rigidbody2D.velocity = direction * Mathf.Max(speed, _ballSpeed);
-            Debug.Log("Out Direction: " + direction);
-            return;
+            _rigidbody2D.velocity = direction * Mathf.Max(speed, _ballSpeed);
         }
 
-        if (paddleAngle < -.25)
+        else if (paddleAngle < -.25)
         {
             //Left side of the paddle hit
             Vector2 direction = new Vector2(paddleAngle, 1).normalized;
@@ -113,21 +115,35 @@ public class Ball : MonoBehaviour
             Vector2 direction = new Vector2(paddleAngle, 1).normalized;
             _rigidbody2D.velocity = direction * speed;
         }
+        //Play audio based on what the ball hits
+        PlayAudio(collision);
+    }
+
+    private void PlayAudio(Collision2D collision)
+    {
+        if (collision.transform.tag == "Brick")
+        {
+            _audio.clip = _audioSources[0];
+            _audio.Play();
+        }
+        else {
+            _audio.clip = _audioSources[1];
+            _audio.Play();
+        }
     }
 
     public void BallSetup()
     {
+        print(_rigidbody2D);
         //Set up the ball with the player paddle
         _ballSetup = true;
+
         _rigidbody2D.transform.SetParent(Player.transform);
         _rigidbody2D.isKinematic = true;
         _rigidbody2D.transform.localPosition = new Vector2(0, 0.3f);
         _rigidbody2D.velocity = _startingVelocity;
 
-        //Disable the particle system while the ball is inactive
-        _particleSystem.gameObject.SetActive(false);
-
-        //Reset stored bounce velocity to initial velocity
-        //_velocity = _startingVelocity;
+        //Disable the trail while the ball is inactive
+        _trailRenderer.gameObject.SetActive(false);
     }
 }

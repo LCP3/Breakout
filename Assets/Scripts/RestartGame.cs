@@ -11,6 +11,7 @@ public class RestartGame : MonoBehaviour
     public void GameOver(string levelName)
     {
         SceneManager.LoadScene(levelName);
+        GameSystems.ChangeLives(3);
     }
 
 }
