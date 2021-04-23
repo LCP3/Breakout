@@ -12,16 +12,20 @@ public class KillOnEnter : MonoBehaviour
         if (Ball == null) //Make sure the collision is a ball
             return;
 
-        print($"Ballcount: {GameSystems.BallCount}");
+        print($"Ballcount: {BallManager.BallCount}");
 
-        if (GameSystems.BallCount > 1) //If there's more than one ball on screen
+        /*if (BallManager.BallCount > 1) //If there's more than one ball on screen
         {
             Destroy(Ball.gameObject); //Delete the ball that fell past the player
-            GameSystems.ChangeBallCount(-1); //Update Ball Count
+            BallManager.ChangeBallCount(-1); //Update Ball Count
         }
         else { 
             GameSystems.ChangeLives(-1); //Update Ball Count to 0, triggering a life loss
             Ball.BallSetup();
-        }
+        }*/
+
+        //BallManager.DestroyBall();
+
+        print(collision);
     }
 }

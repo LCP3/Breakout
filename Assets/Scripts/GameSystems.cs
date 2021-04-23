@@ -3,16 +3,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class GameSystems
+public class GameSystems : MonoBehaviour
 {
     public static event Action<int> OnPlayerDeath;
     public static event Action<int> OnScoreChange;
 
     public static int Lives { get; set; }
     public static int Score { get; private set; }
-    public static int BallCount { get; private set; }
 
-    
     public static void ChangeLives(int lives)
     {
         Lives += lives;
@@ -26,13 +24,5 @@ public class GameSystems
     {
         Score += points;
         OnScoreChange?.Invoke(Score);
-    }
-
-    public static void ChangeBallCount(int numOfBalls)
-    {
-        if (BallCount == 0)
-            BallCount = 1;
-
-        BallCount += numOfBalls;
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
@@ -22,20 +23,17 @@ public class Ball : MonoBehaviour
     void Start()
     {
         //Cache
-        _transform = GetComponent<Transform>(); 
+        _transform = GetComponent<Transform>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _trailRenderer = GetComponentInChildren<TrailRenderer>();
         _audio = GetComponent<AudioSource>();
         _directionX = _ballSpeed;
         _directionY = _ballSpeed;
 
-        _startingVelocity = new Vector2(_directionX, _directionY); //Set up starting velocity
-        _velocity = new Vector2(_directionX, _directionY); //Set up velocity for initial use
-        _rigidbody2D.velocity = _startingVelocity; //Set ball's starting velocity
-
-        if (GameSystems.BallCount >= 1)
+        if (BallManager.BallCount >= 1)
             return;
 
+        SetVelocity();
         BallSetup();
     }
 
@@ -90,7 +88,7 @@ public class Ball : MonoBehaviour
     private void BounceBall(Rigidbody2D rigidbody2D, Vector2 normal, float paddleAngle, Collision2D collision)
     {
         var speed = lastFrameVelocity.magnitude;
-        
+
         if (paddleAngle == 0) //If we're not hitting the paddle at all
         {
             Vector2 direction = Vector2.Reflect(lastFrameVelocity.normalized, normal); //Reflect at collision's normal with the direction of the last frame's velocity, normalized to decouple velocity from speed.var direction = Vector2.Reflect(lastFrameVelocity.normalized, normal); //Reflect at collision's normal with the direction of the last frame's velocity, normalized to decouple velocity from speed.
@@ -126,7 +124,8 @@ public class Ball : MonoBehaviour
             _audio.clip = _audioSources[0];
             _audio.Play();
         }
-        else {
+        else
+        {
             _audio.clip = _audioSources[1];
             _audio.Play();
         }
@@ -145,5 +144,13 @@ public class Ball : MonoBehaviour
 
         //Disable the trail while the ball is inactive
         _trailRenderer.gameObject.SetActive(false);
+    }
+
+    public void SetVelocity()
+    {
+        _startingVelocity = new Vector2(_directionX, _directionY); //Set up starting velocity
+        _velocity = new Vector2(_directionX, _directionY); //Set up velocity for initial use
+        _rigidbody2D.velocity = _startingVelocity; //Set ball's starting velocity
+        BallManager.Instance.ChangeBallCount(1);
     }
 }

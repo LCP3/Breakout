@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class Powerup : MonoBehaviour
@@ -34,13 +35,13 @@ public class Powerup : MonoBehaviour
     private void PowerupMultiball(Collider2D collision)
     {
         var Player = collision.GetComponent<Player>(); //Make sure the collision is the player
-
         if (Player == null)
             return;
 
-        Instantiate(_ball, transform.position, Quaternion.identity, Player.transform); //Spawn a new ball
+        //Spawn a new ball at position of powerup collision with the player
+        BallManager.Instance.SpawnBall(transform.position);
 
-        GameSystems.ChangeBallCount(1); //Add to the ball count in GameSystems, only last ball lost subtracts a life
+        BallManager.Instance.ChangeBallCount(1); //Add to the ball count in GameSystems, only last ball lost subtracts a life
 
     }
 }
