@@ -12,12 +12,11 @@ public class Ball : MonoBehaviour
     float _directionY;
     Vector2 _velocity;
     Vector2 _startingVelocity;
-    bool _ballSetup;
-    TrailRenderer _trailRenderer;
     Vector2 lastFrameVelocity;
     AudioSource _audio;
 
     public GameObject Player;
+    public BallManager BallManager;
     public AudioClip[] _audioSources;
 
     void Start()
@@ -25,23 +24,16 @@ public class Ball : MonoBehaviour
         //Cache
         _transform = GetComponent<Transform>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _trailRenderer = GetComponentInChildren<TrailRenderer>();
         _audio = GetComponent<AudioSource>();
         _directionX = _ballSpeed;
         _directionY = _ballSpeed;
-
-        if (BallManager.BallCount >= 1)
-            return;
-
-        SetVelocity();
-        BallSetup();
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && _ballSetup == true)
+        if (Input.GetMouseButtonDown(0) && BallManager.Instance._ballSetup == true)
         {
-            ShootBall();
+            BallManager.Instance.ShootBall();
         }
 
         //Store velocity from last frame for calculation purposes
@@ -54,17 +46,7 @@ public class Ball : MonoBehaviour
         _rigidbody2D.velocity = _ballSpeed * (_rigidbody2D.velocity.normalized);
     }
 
-    private void ShootBall()
-    {
-        //Shoot the ball at starting set velocity, detach it from the paddle
-        _ballSetup = false;
-        _rigidbody2D.transform.SetParent(null);
-        _rigidbody2D.isKinematic = false;
-        _rigidbody2D.velocity = _startingVelocity;
 
-        //Enable the particle trail on the ball
-        _trailRenderer.gameObject.SetActive(true);
-    }
 
     private void OnCollisionEnter2D(Collision2D collision) //On collision
     {
@@ -129,28 +111,5 @@ public class Ball : MonoBehaviour
             _audio.clip = _audioSources[1];
             _audio.Play();
         }
-    }
-
-    public void BallSetup()
-    {
-        print(_rigidbody2D);
-        //Set up the ball with the player paddle
-        _ballSetup = true;
-
-        _rigidbody2D.transform.SetParent(Player.transform);
-        _rigidbody2D.isKinematic = true;
-        _rigidbody2D.transform.localPosition = new Vector2(0, 0.3f);
-        _rigidbody2D.velocity = _startingVelocity;
-
-        //Disable the trail while the ball is inactive
-        _trailRenderer.gameObject.SetActive(false);
-    }
-
-    public void SetVelocity()
-    {
-        _startingVelocity = new Vector2(_directionX, _directionY); //Set up starting velocity
-        _velocity = new Vector2(_directionX, _directionY); //Set up velocity for initial use
-        _rigidbody2D.velocity = _startingVelocity; //Set ball's starting velocity
-        BallManager.Instance.ChangeBallCount(1);
     }
 }

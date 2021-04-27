@@ -13,5 +13,4 @@ public class RestartGame : MonoBehaviour
         SceneManager.LoadScene(levelName);
         GameSystems.ChangeLives(3);
     }
-
 }

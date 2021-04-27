@@ -4,22 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    #region Singleton
-    private static Player _instance;
-    public static Player Instance => _instance;
-
-    private void Awake()
-    {
-        if (_instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
-    }
-    #endregion
     Rigidbody2D _rigidbody2D;
     private Vector3 _mousePosition;
 

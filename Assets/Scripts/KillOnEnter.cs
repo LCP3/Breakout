@@ -4,6 +4,23 @@ using UnityEngine;
 public class KillOnEnter : MonoBehaviour
 {
     public GameObject _ball;
+    public BallManager BallManager;
+
+    private void Start()
+    {
+        BallManager.BallCount = 0;
+        //Set up the first ball on game start/retry attempts
+        if (BallManager.BallCount == 0)
+        {
+            BallManager.Instance.SpawnBall(new Vector2(1, 1));
+            BallManager.Instance.ResetBall();
+        }
+    }
+
+    private void Update()
+    {
+        print($"Ball count: {BallManager.BallCount}");
+    }
 
     private void OnTriggerEnter2D(Collider2D collision) //If the ball enters the "kill zone"
     {
@@ -12,20 +29,19 @@ public class KillOnEnter : MonoBehaviour
         if (Ball == null) //Make sure the collision is a ball
             return;
 
-        print($"Ballcount: {BallManager.BallCount}");
-
-        /*if (BallManager.BallCount > 1) //If there's more than one ball on screen
+        if (BallManager.BallCount > 1) //If there's more than one ball on screen
         {
-            Destroy(Ball.gameObject); //Delete the ball that fell past the player
-            BallManager.ChangeBallCount(-1); //Update Ball Count
+            BallManager.Instance.DestroyBall(collision);
+            BallManager.Instance.ChangeBallCount(-1); //Update Ball Count
         }
-        else { 
-            GameSystems.ChangeLives(-1); //Update Ball Count to 0, triggering a life loss
-            Ball.BallSetup();
-        }*/
-
-        //BallManager.DestroyBall();
-
-        print(collision);
+        else if (BallManager.BallCount == 0 && GameSystems.Lives == 0)
+        {
+            BallManager.Instance.DestroyBall(collision);
+        }
+        else
+        { //If the last ball dies
+            GameSystems.ChangeLives(-1); //Lose a life
+            BallManager.Instance.ResetBall(); //Reset the ball to the paddle for a new round
+        }
     }
 }

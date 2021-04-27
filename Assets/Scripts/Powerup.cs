@@ -41,7 +41,7 @@ public class Powerup : MonoBehaviour
         //Spawn a new ball at position of powerup collision with the player
         BallManager.Instance.SpawnBall(transform.position);
 
-        BallManager.Instance.ChangeBallCount(1); //Add to the ball count in GameSystems, only last ball lost subtracts a life
-
+        print($"Powerup ball counter fired");
+        //BallManager.Instance.ChangeBallCount(1); //Add to the ball count in GameSystems, only last ball lost subtracts a life
     }
 }
