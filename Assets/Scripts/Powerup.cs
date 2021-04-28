@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Powerup : MonoBehaviour
@@ -9,9 +10,10 @@ public class Powerup : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     private SpriteRenderer _spriteRenderer;
     private Collider2D _collider2D;
-    private Ball Ball;
 
     public GameObject _ball;
+
+    private List<GameObject> powerupsInScene = new List<GameObject>();
 
     private void Awake()
     {
@@ -30,6 +32,12 @@ public class Powerup : MonoBehaviour
         {
             Destroy(gameObject); //Delete the powerup gameObject
         }
+        else if (collision.transform.name == "Death Area")
+        {
+            //Remove the powerup from the list (TODO)
+            PowerupManager.Instance.RemoveFromList(gameObject);
+            Destroy(gameObject); //Delete the powerup gameObject
+        }
     }
 
     private void PowerupMultiball(Collider2D collision)
@@ -40,8 +48,5 @@ public class Powerup : MonoBehaviour
 
         //Spawn a new ball at position of powerup collision with the player
         BallManager.Instance.SpawnBall(transform.position);
-
-        print($"Powerup ball counter fired");
-        //BallManager.Instance.ChangeBallCount(1); //Add to the ball count in GameSystems, only last ball lost subtracts a life
     }
 }

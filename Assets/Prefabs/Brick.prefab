@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _powerupChance: 10
-  _powerup: {fileID: 2385948689293397108, guid: b153435ac5854664ea1a9ef54c74e662, type: 3}
+  _powerupPrefab: {fileID: 4235633733128794115, guid: b153435ac5854664ea1a9ef54c74e662, type: 3}
 --- !u!198 &-5848524314954180561
 ParticleSystem:
   m_ObjectHideFlags: 0

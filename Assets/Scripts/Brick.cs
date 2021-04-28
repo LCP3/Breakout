@@ -7,7 +7,7 @@ public class Brick : MonoBehaviour
     private Collider2D _collider2D;
     private SpriteRenderer _spriteRenderer;
     private ParticleSystem _particleSystem;
-    public Rigidbody2D _powerup;
+    [SerializeField] GameObject _powerupPrefab;
 
     private void Start()
     {
@@ -29,7 +29,9 @@ public class Brick : MonoBehaviour
         if (_randomNumber <= _powerupChance)
         {
             //Spawn a powerup
-            Instantiate(_powerup, transform.position, Quaternion.identity);
+            GameObject powerup = Instantiate(_powerupPrefab, transform.position, Quaternion.identity);
+            //Add it to the manager's list of powerups in the scene
+            PowerupManager.Instance.AddToList(powerup);
         }
     }
 }
