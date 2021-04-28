@@ -6,33 +6,29 @@ using UnityEngine;
 
 public class BallManager : MonoBehaviour
 {
+    [SerializeField] GameObject Player;
+    [SerializeField] GameObject _ballPrefab;
+    [SerializeField] int _ballSpeed;
+
     public static BallManager Instance { get; private set; } //Singleton pattern
     public static int BallCount { get; set; }
-
-    public int numOfBalls;
-    public GameObject _ballPrefab;
-    public GameObject Player;
-
-    [SerializeField]
-    private int _ballSpeed;
-    private Vector2 _ballVelocity;
-
-    public List<GameObject> ballsInScene = new List<GameObject>();
+    
     public bool _ballSetup;
 
+    private List<GameObject> ballsInScene = new List<GameObject>();
+    private Vector2 _ballVelocity;
 
     private void Awake()
     {
         if (Instance == null) //If this code is running for the first time
         {
             Instance = this; //Set this (BallManager) to the Instance property
-            DontDestroyOnLoad(gameObject);
         }
         else {
-            //Destroy(gameObject); //If a duplicate gets created somehow, destroy it
+            Destroy(gameObject); //If a duplicate gets created somehow, destroy it
         }
 
-        //_trailRenderer = ball.GetComponentInChildren<TrailRenderer>();
+        //Cache
         _ballVelocity = new Vector2(_ballSpeed, _ballSpeed);
     }
 
@@ -85,9 +81,6 @@ public class BallManager : MonoBehaviour
         ball.GetComponent<Rigidbody2D>().transform.localPosition = new Vector2(0, 0.3f);
         ball.GetComponent<Rigidbody2D>().velocity = _ballVelocity;
 
-        print($"Reset: {ball.transform.GetChild(0)}");
-
-
         //Disable the particle trail on the ball
         ball.transform.GetChild(0).gameObject.SetActive(false);
     }
@@ -100,9 +93,12 @@ public class BallManager : MonoBehaviour
         ball.GetComponent<Rigidbody2D>().isKinematic = false;
         ball.GetComponent<Rigidbody2D>().velocity = _ballVelocity;
 
-        print(ball.transform.GetChild(0));
-
         //Enable the particle trail on the ball
         ball.transform.GetChild(0).gameObject.SetActive(true);
+    }
+
+    internal void ClearBallList()
+    {
+        ballsInScene.Clear();
     }
 }

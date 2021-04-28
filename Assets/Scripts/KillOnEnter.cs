@@ -12,14 +12,10 @@ public class KillOnEnter : MonoBehaviour
         //Set up the first ball on game start/retry attempts
         if (BallManager.BallCount == 0)
         {
+            BallManager.Instance.ClearBallList();
             BallManager.Instance.SpawnBall(new Vector2(1, 1));
             BallManager.Instance.ResetBall();
         }
-    }
-
-    private void Update()
-    {
-        print($"Ball count: {BallManager.BallCount}");
     }
 
     private void OnTriggerEnter2D(Collider2D collision) //If the ball enters the "kill zone"
