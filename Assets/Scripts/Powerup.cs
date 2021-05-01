@@ -30,11 +30,12 @@ public class Powerup : MonoBehaviour
 
         if (collision.transform.name == "Player") //If the powerup hits the player
         {
+            PowerupManager.Instance.RemoveFromList(gameObject);
             Destroy(gameObject); //Delete the powerup gameObject
         }
         else if (collision.transform.name == "Death Area")
         {
-            //Remove the powerup from the list (TODO)
+            //Remove the powerup from the list
             PowerupManager.Instance.RemoveFromList(gameObject);
             Destroy(gameObject); //Delete the powerup gameObject
         }

@@ -276,7 +276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ballSpeed: 6
   Player: {fileID: 1372406469114422618, guid: d30b905c46f14ec4086fa2112d3918bf, type: 3}
-  BallPrefab: {fileID: 6873414391550339809}
+  BallManager: {fileID: 0}
   _audioSources:
   - {fileID: 8300000, guid: 473a09396390922429eb63258574c092, type: 3}
   - {fileID: 8300000, guid: bae170836839daf4ba664fd22afdb04b, type: 3}

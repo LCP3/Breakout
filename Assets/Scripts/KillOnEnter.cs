@@ -38,6 +38,7 @@ public class KillOnEnter : MonoBehaviour
         { //If the last ball dies
             GameSystems.ChangeLives(-1); //Lose a life
             BallManager.Instance.ResetBall(); //Reset the ball to the paddle for a new round
+            PowerupManager.Instance.RemovePowerupsInScene(); //Remove all powerups in the scene
         }
     }
 }

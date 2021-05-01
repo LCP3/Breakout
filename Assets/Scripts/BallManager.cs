@@ -40,6 +40,25 @@ public class BallManager : MonoBehaviour
 
     internal void SpawnBall(Vector2 position)
     {
+
+        //If the multiball powerup is picked up below the transform of the Player
+        if (position.y <= -6.2f)
+        {
+            //Instantiate a new ball roughly at the Player's transform
+            GameObject newBallFix = Instantiate(_ballPrefab, new Vector2(position.x, position.y + 0.2f), Quaternion.identity);
+
+            //Set its velocity
+            newBallFix.GetComponent<Rigidbody2D>().velocity = new Vector2(_ballSpeed, _ballSpeed);
+
+            //Add it to the list of balls
+            ballsInScene.Add(newBallFix);
+
+            //Add to the ball counter
+            ChangeBallCount(1);
+
+            return;
+        }
+
         //Instantiate a new ball
         GameObject newBall = Instantiate(_ballPrefab, new Vector2(position.x, position.y), Quaternion.identity);
 
