@@ -21,7 +21,6 @@ public class UILives : MonoBehaviour
 
     private void UpdateLivesText(int lives)
     {
-        Debug.Log($"Lives updated to : {lives}");
         _text.SetText($"Lives: {lives}");
     }
 }

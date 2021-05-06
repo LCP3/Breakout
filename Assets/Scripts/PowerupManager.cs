@@ -20,11 +20,6 @@ public class PowerupManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        print(powerupsInScene.Count);
-    }
-
     public void AddToList(GameObject powerup)
     {
         powerupsInScene.Add(powerup);
