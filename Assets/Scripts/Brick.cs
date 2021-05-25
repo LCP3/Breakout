@@ -33,5 +33,6 @@ public class Brick : MonoBehaviour
             //Add it to the manager's list of powerups in the scene
             PowerupManager.Instance.AddToList(powerup);
         }
+        BrickManager.Instance.RemoveFromList(gameObject);
     }
 }

@@ -39,7 +39,8 @@ public class LevelGenerator : MonoBehaviour
             {
                 Vector3 position = new Vector2(x*.7f, y*.35f);
                 print(position);
-                Instantiate(colorMap.prefab, transform.position + position, Quaternion.identity, transform);
+                GameObject brick = Instantiate(colorMap.prefab, transform.position + position, Quaternion.identity, transform);
+                BrickManager.Instance.AddToList(brick);
             }
         }
     }
